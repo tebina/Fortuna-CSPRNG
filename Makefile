@@ -3,13 +3,13 @@ SRC_DIR = .
 TB_DIR = .
 
 # List of source files to compile
-SRC_FILES = $(SRC_DIR)/mux2to1.vhd
+SRC_FILES = $(SRC_DIR)/counter.vhd
 
 # List of testbench files to compile
-TB_FILES = $(TB_DIR)/tb_mux2to1.vhd
+TB_FILES = $(TB_DIR)/tb_counter.vhd
 
 # Name of the top-level testbench
-TOP_LEVEL = tb_mux2to1
+TOP_LEVEL = tb_counter
 
 VLIB = vlib
 VCOM = vcom

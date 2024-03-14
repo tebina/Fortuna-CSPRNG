@@ -1,91 +1,83 @@
-
-library IEEE;
-use IEEE.std_logic_1164.all;
-use IEEE.numeric_std.all;
+library ieee;
+  use ieee.std_logic_1164.all;
+  use ieee.numeric_std.all;
+  use std.env.finish;
 
 entity tb_counter is
 end entity tb_counter;
 
-architecture testbench of tb_counter is
-  -- Constants
-  constant CLOCK_PERIOD : time := 10 ns; -- Clock period
-  constant TIMEOUT : time := 1000 ns;     -- Maximum simulation time
+architecture sim of tb_counter is
 
-  -- Signals
-  signal clk, rst, enable, done : std_logic;
-  signal count : std_logic_vector(127 downto 0);
-
-  -- Clock process
-  process
-  begin
-    while not Stop_Simulation loop
-      clk <= '0';
-      wait for CLOCK_PERIOD / 2;
-      clk <= '1';
-      wait for CLOCK_PERIOD / 2;
-    end loop;
-    wait;
-  end process;
-
-  -- Test process
-  process
-  begin
-    -- Reset and enable counter
-    rst <= '1';
-    enable <= '0';
-    wait for 20 ns;
-    rst <= '0';
-    enable <= '1';
-
-    -- Wait for some cycles
-    wait for 200 ns;
-
-    -- Disable counter
-    enable <= '0';
-
-    -- Wait for some cycles
-    wait for 50 ns;
-
-    -- Re-enable counter
-    enable <= '1';
-
-    -- Wait for some cycles
-    wait for 300 ns;
-
-    -- Verify if the count is correct
-    if count /= X"00000000000000000000000000000000" then
-      report "Test failed: Counter output incorrect after enable";
-    end if;
-
-    wait for done = '1';
-    -- Report test completion
-    report "Test completed successfully";
-    wait;
-  end process;
-
-  -- Stop simulation process
-  function Stop_Simulation return boolean is
-  begin
-    if now > TIMEOUT then
-      report "Simulation timeout reached";
-      return true;
-    else
-      return false;
-    end if;
-  end function;
+  constant clock_period : time      := 10 ns;             -- Define clock period
+  signal   clk          : std_logic := '0';
+  signal   rst          : std_logic := '0';
+  signal   enable       : std_logic := '0';
+  signal   done         : std_logic := '0';               -- Signals for the testbench
+  signal   count        : std_logic_vector(127 downto 0); -- Signal for the counter output
 
 begin
-  -- Instantiate DUT
-  dut: entity work.counter
+
+  -- Instantiate the counter entity
+  dut : entity work.counter
     port map (
-      clk => clk,
-      rst => rst,
+      clk    => clk,
+      rst    => rst,
       enable => enable,
-      done => done,
-      count => count
+      done   => done,
+      count  => count
     );
 
-  -- Monitor outputs if needed
-  -- Add code here if you want to monitor outputs during simulation
+  -- Clock process
+  clk_process : process is
+  begin
 
-end architecture testbench;
+    loop -- Run the clock for 1000 ns
+
+      clk <= '0';
+      wait for clock_period / 2;
+      clk <= '1';
+      wait for clock_period / 2;
+
+    end loop;
+
+    wait;
+
+  end process clk_process;
+
+  -- Stimulus process
+  stimulus_process : process is
+  begin
+
+    -- Reset
+    rst    <= '1';
+    enable <= '0';
+    wait for 20 ns;
+    rst    <= '0';
+    wait for 10 ns;
+
+    -- Enable counter
+    enable <= '1';
+    wait for 500 ns;
+
+    -- Reset again
+    rst <= '1';
+    wait for 10 ns;
+    rst <= '0';
+
+    wait;
+
+  end process stimulus_process;
+
+  -- Monitor process
+  monitor_process : process is
+  begin
+
+    wait until done = '1'; -- Wait until counter is done
+    report "Simulation finished successfully ! "
+      severity note;
+    finish;
+
+  end process monitor_process;
+
+end architecture sim;
+

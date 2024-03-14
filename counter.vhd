@@ -8,7 +8,7 @@ entity counter is
     clk    : in    std_logic;
     rst    : in    std_logic;
     enable : in    std_logic;
-    done   : out   std_logic;
+    done   : out   std_logic := '0';
     count  : out   std_logic_vector(127 downto 0)
   );
 end entity counter;
@@ -19,15 +19,17 @@ architecture counter_behavioural of counter is
 
 begin
 
-  count_process : process (clk, rst, enable) is
+  count_process : process (clk, rst, enable, count_signal) is
   begin
 
     if (rst = '1') then
       count_signal <= (others => '0');
-    elsif (clk'event and clk = '1' and enable = '1' and count_signal /= X"FFFFF") then
-      count_signal <= count_signal + 1;
-    else
-      done <= '1';
+    elsif (clk'event and clk = '1' and enable = '1') then
+      if (count_signal = X"FFFFF") then
+        done <= '1';
+      else
+        count_signal <= count_signal + 1;
+      end if;
     end if;
 
   end process count_process;
