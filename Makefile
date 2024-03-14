@@ -1,18 +1,15 @@
-
 # Paths to source and testbench files
-SRC_DIR = src
-TB_DIR = tb
+SRC_DIR = .
+TB_DIR = .
 
 # List of source files to compile
-SRC_FILES = $(SRC_DIR)/table.v \
-    				$(SRC_DIR)/round.v \
-    				$(SRC_DIR)/aes_256.v 
+SRC_FILES = $(SRC_DIR)/mux2to1.vhd
 
 # List of testbench files to compile
-TB_FILES = $(TB_DIR)/test_aes_256.v
+TB_FILES = $(TB_DIR)/tb_mux2to1.vhd
 
 # Name of the top-level testbench
-TOP_LEVEL = test_aes_256
+TOP_LEVEL = tb_mux2to1
 
 VLIB = vlib
 VCOM = vcom
@@ -25,7 +22,7 @@ all: compile run
 # Compile source and testbench files
 compile:
 		$(VLIB) work
-		$(VLOG) $(SRC_FILES) $(TB_FILES)
+		$(VCOM) $(SRC_FILES) $(TB_FILES)
 
 # Run ModelSim simulation
 run:

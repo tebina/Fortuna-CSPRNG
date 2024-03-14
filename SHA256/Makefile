@@ -1,4 +1,3 @@
-MODELSIM = /tools/intelFPGA_pro/20.1/modelsim_ase/bin
 
 # Paths to source and testbench files
 SRC_DIR = src
@@ -20,17 +19,22 @@ TB_FILES = \
 # Name of the top-level testbench
 TOP_LEVEL = tb_sha256
 
+VLIB = vlib
+VCOM = vcom
+VLOG = vlog
+VSIM = vsim
+
 # Default target (runs compilation and simulation)
 all: compile run
 
 # Compile source and testbench files
 compile:
-		$(MODELSIM)/vlib work
-		$(MODELSIM)/vcom $(SRC_FILES) $(TB_FILES)
+		$(VLIB) work
+		$(VCOM) $(SRC_FILES) $(TB_FILES)
 
 # Run ModelSim simulation
 run:
-		$(MODELSIM)/vsim -c -do "run -all; quit -f" work.$(TOP_LEVEL)
+		$(VSIM) -c -do "run -all; quit -f" work.$(TOP_LEVEL)
 
 # Clean generated files
 clean:
