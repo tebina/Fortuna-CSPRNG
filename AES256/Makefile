@@ -4,15 +4,15 @@ SRC_DIR = src
 TB_DIR = tb
 
 # List of source files to compile
-SRC_FILES = $(SRC_DIR)/table.v \
-    				$(SRC_DIR)/round.v \
-    				$(SRC_DIR)/aes_256.v 
+SRC_FILES = $(SRC_DIR)/aes_sbox.v \
+    				$(SRC_DIR)/aes_ks.v \
+    				$(SRC_DIR)/aes_core.v 
 
 # List of testbench files to compile
-TB_FILES = $(TB_DIR)/test_aes_256.v
+TB_FILES = $(TB_DIR)/aes_core_tb.v
 
 # Name of the top-level testbench
-TOP_LEVEL = test_aes_256
+TOP_LEVEL = aes_core_tb
 
 VLIB = vlib
 VCOM = vcom

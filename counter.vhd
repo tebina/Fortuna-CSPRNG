@@ -8,7 +8,7 @@ entity counter is
     clk    : in    std_logic;
     rst    : in    std_logic;
     enable : in    std_logic;
-    done   : out   std_logic := '0';
+    done   : out   std_logic;
     count  : out   std_logic_vector(127 downto 0)
   );
 end entity counter;
@@ -24,7 +24,8 @@ begin
 
     if (rst = '1') then
       count_signal <= (others => '0');
-    elsif (clk'event and clk = '1' and enable = '1') then
+      done         <= '0';
+    elsif (rising_edge(clk) and enable = '1') then
       if (count_signal = X"FFFFF") then
         done <= '1';
       else
