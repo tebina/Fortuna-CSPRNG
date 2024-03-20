@@ -1,1 +1,1 @@
-Credit : https://github.com/skordal/sha256
+Inspired from : github.com/secworks/sha256

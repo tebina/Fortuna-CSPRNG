@@ -5,19 +5,19 @@ TB_DIR = tb
 
 # List of source files to compile
 SRC_FILES = \
-    $(SRC_DIR)/sha256_types.vhd \
-    $(SRC_DIR)/sha256_constants.vhd \
-    $(SRC_DIR)/sha256_functions.vhd \
-    $(SRC_DIR)/sha256.vhd
+    $(SRC_DIR)/sha256_w_mem.v \
+    $(SRC_DIR)/sha256_k_constants.v \
+    $(SRC_DIR)/sha256_core.v \
+    $(SRC_DIR)/sha256d.v
+
 
 # List of testbench files to compile
 TB_FILES = \
-    $(TB_DIR)/testrom.vhd \
-    $(TB_DIR)/tb_sha256.vhd
+    $(TB_DIR)/tb_sha256d.v
 
 
 # Name of the top-level testbench
-TOP_LEVEL = tb_sha256
+TOP_LEVEL = tb_sha256d
 
 VLIB = vlib
 VCOM = vcom
@@ -30,7 +30,7 @@ all: compile run
 # Compile source and testbench files
 compile:
 		$(VLIB) work
-		$(VCOM) $(SRC_FILES) $(TB_FILES)
+		$(VLOG) $(SRC_FILES) $(TB_FILES)
 
 # Run ModelSim simulation
 run:
