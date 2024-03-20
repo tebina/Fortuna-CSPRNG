@@ -16,7 +16,8 @@ module sha256d (
 
   localparam IDLE = 2'b00;
   localparam FIRST_ENCRYPT = 2'b01;
-  localparam SECOND_ENCRYPT = 2'b10;
+  localparam STABILIZE = 2'b10;
+  localparam SECOND_ENCRYPT = 2'b11;
   reg  [  1:0] state_reg;
   reg  [  1:0] next_state;
 
@@ -60,12 +61,19 @@ module sha256d (
       FIRST_ENCRYPT: begin
         local_init <= 0;
         if (local_ready) begin
-          next_state   <= SECOND_ENCRYPT;
+          next_state   <= STABILIZE;
           block_signal <= {local_hash, PADDING};
         end else next_state <= FIRST_ENCRYPT;
       end
-      SECOND_ENCRYPT: begin
+
+      STABILIZE: begin
         local_init <= 1;
+        if (!local_ready) begin
+          next_state <= SECOND_ENCRYPT;
+        end else next_state <= STABILIZE;
+      end
+      SECOND_ENCRYPT: begin
+        local_init <= 0;
         if (local_ready) begin
           next_state  <= IDLE;
           final_hash  <= local_hash;
