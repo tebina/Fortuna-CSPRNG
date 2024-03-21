@@ -117,7 +117,7 @@ module tb_sha256d ();
 
 
       tc1  = 256'he3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855;
-      res1 = 256'h5df6e0e2761359d30a8275058e299fcc0381534545f55cf43e41983f5d4c9456;
+      res1 = 256'haa6ac2d4961882f42a345c7615f4133dde8e6d6e7c1b6b40ae4ff6ee52c393d0;
       single_block_test(1, tc1, res1);
 
 

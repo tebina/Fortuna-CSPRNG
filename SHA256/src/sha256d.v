@@ -21,7 +21,6 @@ module sha256d (
   reg  [  1:0] state_reg;
   reg  [  1:0] next_state;
 
-  reg          local_reset_n;
   reg          local_init;
   wire         local_ready;
   reg  [511:0] block_signal;
