@@ -8,4 +8,6 @@ However this implementation doesn't include the entropy accumulator such as desc
 
 The design of the top module of Fortuna-CSPRNG is depicted in the following figure :
 
-<img src="doc/fortuna.svg" alt="Fortuna implementation" width="3840" height="2160">
+<div style="display: flex; justify-content: center; align-items: center;">
+  <img src="doc/fortuna.svg" alt="Alt text" width="1920" height="500">
+</div>
