@@ -68,7 +68,7 @@ begin
     wait for 20 ns;
     rst <= '0';
 
-    seed_data <= (others => '1');
+    seed_data <= (others => '0');
     -- Wait for a few clock cycles
     wait for clk_period * 5;
 
