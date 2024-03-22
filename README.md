@@ -7,3 +7,5 @@ Hardware implementation of a simplified version of the Cryptographically Secure 
 However this implementation doesn't include the entropy accumulator such as described by the authors, the designer is free to implement their own entropy source in order to seed the PRNG.
 
 The design of the top module of Fortuna-CSPRNG is depicted in the following figure :
+
+<img src="doc/fortuna.svg" alt="Fortuna implementation" width="3840" height="2160">
