@@ -9,11 +9,11 @@ However this implementation doesn't include the entropy accumulator such as desc
 The design of the top module of Fortuna-CSPRNG is depicted in the following figure :
 
 <div style="display: flex; justify-content: center; align-items: center;">
-  <img src="doc/fortuna.svg" alt="Alt text" width="1920" height="500">
+  <img src="doc/fortuna.svg" alt="fortuna design" width="1920" height="500">
 </div>
 
 <div style="display: flex; justify-content: center; align-items: center;">
-  <img src="doc/fortuna_bench.png" alt="Alt text" width="1920" height="500">
+  <img src="doc/fortuna_bench.png" alt="fortuna bench">
 </div>
 
 The design generates 16 random bytes at a time:
@@ -21,3 +21,13 @@ The design generates 16 random bytes at a time:
 ```
 Throughput = 8.65 MB/s
 ```
+
+# How to run 
+
+To run the self-testing test-benches
+If you have modelsim added to ``$PATH`` just run : 
+
+```
+make
+```
+In the desired root directory.
