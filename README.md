@@ -11,3 +11,13 @@ The design of the top module of Fortuna-CSPRNG is depicted in the following figu
 <div style="display: flex; justify-content: center; align-items: center;">
   <img src="doc/fortuna.svg" alt="Alt text" width="1920" height="500">
 </div>
+
+<div style="display: flex; justify-content: center; align-items: center;">
+  <img src="doc/fortuna_bench.png" alt="Alt text" width="1920" height="500">
+</div>
+
+The design generates 16 random bytes at a time:
+
+```
+Throughput = 8.65 MB/s
+```
