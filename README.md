@@ -107,19 +107,19 @@ In the desired root directory.
 
 ## Signals
 
-| Name               | Type                           | Description                                                                                                             |
-| ------------------ | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------- | --- |
-| load_i_signal      | std_logic                      | load input into AES block cipher                                                                                        |
-| key_i_buffer       | std_logic_vector(255 downto 0) | used to hold two successive AES encryptions to be used as key for the counter mode                                      |
-| counter_o_signal   | std_logic_vector(127 downto 0) | counter output value as a 128-bit vector                                                                                |
-| data_o_buffer      | std_logic_vector(127 downto 0) | buffer of the encrypted 128-bit vector from the AES                                                                     |
-| enable_signal      | std_logic                      | enable signal used to increment the counter                                                                             |
-| random_data_signal | std_logic_vector(127 downto 0) | output register that hold the PRNG random output vector                                                                 |
-| encrypt_busy_o     | std_logic                      | If high, the AES is still busy encrypting                                                                               |
-| encrypt_schedule   | integer range 0 to 3           | variable to schedule 3 succesive encryptions: one for the output and two more to be used as key for the next encryption |
-| current_state      | state_type                     | mealy fsm current_state register                                                                                        |
-| next_state         | state_type                     | mealy fsm next_state register                                                                                           |
-| cipher_buffer      | buffer_type                    | buffer holding three encrpyted vectors : one for the output and two more to be used as key for the next encryption      |     |
+| Name               | Type                           | Description                                                                                     |
+| ------------------ | ------------------------------ | ----------------------------------------------------------------------------------------------- |
+| load_i_signal      | std_logic                      | load input into AES block cipher                                                                |
+| key_i_buffer       | std_logic_vector(255 downto 0) | used to hold two successive AES encryptions to be used as key for the counter mode              |
+| counter_o_signal   | std_logic_vector(127 downto 0) | counter output value as a 128-bit vector                                                        |
+| data_o_buffer      | std_logic_vector(127 downto 0) | buffer of the encrypted 128-bit vector from the AES                                             |
+| enable_signal      | std_logic                      | enable signal used to increment the counter                                                     |
+| random_data_signal | std_logic_vector(127 downto 0) | output register that hold the PRNG random output vector                                         |
+| encrypt_busy_o     | std_logic                      | If high, the AES is still busy encrypting                                                       |
+| encrypt_schedule   | integer range 0 to 3           | variable to schedule 3 succesive encryptions: one for the output and two more to be used as key |
+| current_state      | state_type                     | mealy fsm current_state register                                                                |
+| next_state         | state_type                     | mealy fsm next_state register                                                                   |
+| cipher_buffer      | buffer_type                    | buffer holding three encrpyted vectors : one for the output and two more to be used as key      |
 
 ## Types
 
