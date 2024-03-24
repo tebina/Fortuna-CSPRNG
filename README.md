@@ -43,28 +43,28 @@ In the desired root directory.
 
 ## Ports
 
-| Port name   | Direction | Type                           | Description |
-| ----------- | --------- | ------------------------------ | ----------- |
-| clk         | in        | std_logic                      |             |
-| rst         | in        | std_logic                      |             |
-| start       | in        | std_logic                      |             |
-| seed_data   | in        | std_logic_vector(255 downto 0) |             |
-| done        | out       | std_logic                      |             |
-| random_data | out       | std_logic_vector(127 downto 0) |             |
+| Port name   | Direction | Type                           | Description                                                                     |
+| ----------- | --------- | ------------------------------ | ------------------------------------------------------------------------------- |
+| clk         | in        | std_logic                      | clock signal                                                                    |
+| rst         | in        | std_logic                      | reset to idle state                                                             |
+| start       | in        | std_logic                      | start fortuna algorithm : random keep generating as long as start is asserted   |
+| seed_data   | in        | std_logic_vector(255 downto 0) | random seed input for the Fortuna algorithm                                     |
+| done        | out       | std_logic                      | the 128-bit random generated vector is ready to be read as long as done is high |
+| random_data | out       | std_logic_vector(127 downto 0) | output random data vector                                                       |
 
 ## Signals
 
-| Name               | Type                           | Description |
-| ------------------ | ------------------------------ | ----------- |
-| local_hashed_seed  | std_logic_vector(255 downto 0) |             |
-| local_sampled_seed | std_logic_vector(255 downto 0) |             |
-| local_sha_start    | std_logic                      |             |
-| local_fcore_start  | std_logic                      |             |
-| local_sha_done     | std_logic                      |             |
-| local_fcore_done   | std_logic                      |             |
-| reset_np           | std_logic                      |             |
-| current_state      | state_type                     |             |
-| next_state         | state_type                     |             |
+| Name               | Type                           | Description                                            |
+| ------------------ | ------------------------------ | ------------------------------------------------------ |
+| local_hashed_seed  | std_logic_vector(255 downto 0) | local hash vector that is used to double hash the seed |
+| local_sampled_seed | std_logic_vector(255 downto 0) | buffer that hold the input seed to SHA256              |
+| local_sha_start    | std_logic                      | start SHA encryption                                   |
+| local_fcore_start  | std_logic                      | start Fortuna Core encryption                          |
+| local_sha_done     | std_logic                      | SHA done encrypting                                    |
+| local_fcore_done   | std_logic                      | Fortuna Core done encrypting                           |
+| reset_np           | std_logic                      | SHA256 module reset low                                |
+| current_state      | state_type                     | mealy fsm current_state register                       |
+| next_state         | state_type                     | mealy fsm next_state register                          |
 
 ## Types
 
@@ -96,30 +96,30 @@ In the desired root directory.
 
 ## Ports
 
-| Port name   | Direction | Type                           | Description |
-| ----------- | --------- | ------------------------------ | ----------- |
-| clk         | in        | std_logic                      |             |
-| rst         | in        | std_logic                      |             |
-| start       | in        | std_logic                      |             |
-| seed_data   | in        | std_logic_vector(255 downto 0) |             |
-| done        | out       | std_logic                      |             |
-| random_data | out       | std_logic_vector(127 downto 0) |             |
+| Port name   | Direction | Type                           | Description                                                                                 |
+| ----------- | --------- | ------------------------------ | ------------------------------------------------------------------------------------------- |
+| clk         | in        | std_logic                      | clock signal                                                                                |
+| rst         | in        | std_logic                      | global reset signal                                                                         |
+| start       | in        | std_logic                      | start fortuna algorithm : random keep generating as long as start is asserted               |
+| seed_data   | in        | std_logic_vector(255 downto 0) | seed 256-bit input                                                                          |
+| done        | out       | std_logic                      | done is asserted as long as the random vector is present at the output and ready to be read |
+| random_data | out       | std_logic_vector(127 downto 0) | random 128-bit chunks that correspond to the generated random data                          |
 
 ## Signals
 
-| Name               | Type                           | Description |
-| ------------------ | ------------------------------ | ----------- |
-| load_i_signal      | std_logic                      |             |
-| key_i_buffer       | std_logic_vector(255 downto 0) |             |
-| counter_o_signal   | std_logic_vector(127 downto 0) |             |
-| data_o_buffer      | std_logic_vector(127 downto 0) |             |
-| enable_signal      | std_logic                      |             |
-| random_data_signal | std_logic_vector(127 downto 0) |             |
-| encrypt_busy_o     | std_logic                      |             |
-| encrypt_schedule   | integer range 0 to 3           |             |
-| current_state      | state_type                     |             |
-| next_state         | state_type                     |             |
-| cipher_buffer      | buffer_type                    |             |
+| Name               | Type                           | Description                                                                                                             |
+| ------------------ | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------- | --- |
+| load_i_signal      | std_logic                      | load input into AES block cipher                                                                                        |
+| key_i_buffer       | std_logic_vector(255 downto 0) | used to hold two successive AES encryptions to be used as key for the counter mode                                      |
+| counter_o_signal   | std_logic_vector(127 downto 0) | counter output value as a 128-bit vector                                                                                |
+| data_o_buffer      | std_logic_vector(127 downto 0) | buffer of the encrypted 128-bit vector from the AES                                                                     |
+| enable_signal      | std_logic                      | enable signal used to increment the counter                                                                             |
+| random_data_signal | std_logic_vector(127 downto 0) | output register that hold the PRNG random output vector                                                                 |
+| encrypt_busy_o     | std_logic                      | If high, the AES is still busy encrypting                                                                               |
+| encrypt_schedule   | integer range 0 to 3           | variable to schedule 3 succesive encryptions: one for the output and two more to be used as key for the next encryption |
+| current_state      | state_type                     | mealy fsm current_state register                                                                                        |
+| next_state         | state_type                     | mealy fsm next_state register                                                                                           |
+| cipher_buffer      | buffer_type                    | buffer holding three encrpyted vectors : one for the output and two more to be used as key for the next encryption      |     |
 
 ## Types
 
