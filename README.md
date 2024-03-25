@@ -16,11 +16,7 @@ The design of the top module of Fortuna-CSPRNG is depicted in the following figu
   <img src="doc/fortuna_bench.png" alt="fortuna bench">
 </div>
 
-The design generates 16 random bytes at a time:
-
-```
-Throughput = 8.65 MB/s
-```
+The design generates 16 random bytes at a time.
 
 # How to run
 
